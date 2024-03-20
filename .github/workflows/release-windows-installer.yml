@@ -21,25 +21,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Output latest tag
-        id: latest-tag
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-
-          echo " "
-          echo "Latest tag - before: ${tag}"
-          echo " "
-
-          git fetch origin
-          git fetch --tags
-
-          latestTag=$(git describe --tags --abbrev=0)
-
-          echo " "
-          echo "Latest tag - after:  ${latestTag}"
-          echo " "
-
-          echo '::set-output name=NEW_RELIC_CLI_VERSION::${latestTag}'
+      - name: Get latest tag
+        id: get-latest-tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.3
@@ -51,7 +35,7 @@ jobs:
 #          path: .\dist\newrelic_windows_amd64_v1
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ steps.latest-tag.outputs.NEW_RELIC_CLI_VERSION }}
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ steps.get-latest-tag.outputs.tag }}
 
       - name: Create PFX certificate
         id: create-pfx
