@@ -30,7 +30,7 @@ jobs:
           path: .\dist\newrelic_windows_amd64_v1
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln /p:CLIVersion=1.2.3
 
       - name: Create PFX certificate
         id: create-pfx
@@ -42,52 +42,51 @@ jobs:
           Set-Content $pfxPath -Value $encodedBytes -AsByteStream;
           Write-Output "::set-output name=PFX_PATH::$pfxPath";
 
-      - name: Sign installer
-        env:
-          PFX_PASSWORD: ${{ secrets.PFX_CERT_PASSWORD }}
-          PFX_PATH: ${{ steps.create-pfx.outputs.PFX_PATH }}
-        working-directory: .\build\package\msi\NewRelicCLIInstaller
-        run: .\SignMSI.cmd
+#      - name: Sign installer
+#        env:
+#          PFX_PASSWORD: ${{ secrets.PFX_CERT_PASSWORD }}
+#          PFX_PATH: ${{ steps.create-pfx.outputs.PFX_PATH }}
+#        working-directory: .\build\package\msi\NewRelicCLIInstaller
+#        run: .\SignMSI.cmd
+#
+#      - name: Sign install script
+#        env:
+#          PFX_PASSWORD: ${{ secrets.PFX_CERT_PASSWORD }}
+#          PFX_PATH: ${{ steps.create-pfx.outputs.PFX_PATH }}
+#        working-directory: .\
+#        run: .\build\package\msi\NewRelicCLIInstaller\SignPS1.cmd
+#
+#      - name: Delete PFX certificate
+#        env:
+#          PFX_PATH: ${{ steps.create-pfx.outputs.PFX_PATH }}
+#        run: |
+#          Remove-Item -Path $env:PFX_PATH;
 
-      - name: Sign install script
-        env:
-          PFX_PASSWORD: ${{ secrets.PFX_CERT_PASSWORD }}
-          PFX_PATH: ${{ steps.create-pfx.outputs.PFX_PATH }}
-        working-directory: .\
-        run: .\build\package\msi\NewRelicCLIInstaller\SignPS1.cmd
-
-      - name: Delete PFX certificate
-        env:
-          PFX_PATH: ${{ steps.create-pfx.outputs.PFX_PATH }}
-        run: |
-          Remove-Item -Path $env:PFX_PATH;
-
-      - name: Get latest release upload URL
-        id: get-latest-release-upload-url
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        run: echo "::set-output name=upload_url::$(./scripts/get_latest_release_upload_url.sh)"
-
-      - name: Upload Windows installer
-        id: upload-windows-installer
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-          upload_url: ${{ steps.get-latest-release-upload-url.outputs.upload_url }}
-          asset_path: .\build\package\msi\NewRelicCLIInstaller\bin\x64\Release\NewRelicCLIInstaller.msi
-          asset_name: NewRelicCLIInstaller.msi
-          asset_content_type: application/octet-stream
-
-      - name: Upload windows install script
-        id: upload-windows-install-script
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-          upload_url: ${{ steps.get-latest-release-upload-url.outputs.upload_url }}
-          asset_path: .\scripts\install.ps1
-          asset_name: install.ps1
-          asset_content_type: application/octet-stream
-
+#      - name: Get latest release upload URL
+#        id: get-latest-release-upload-url
+#        shell: bash
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+#        run: echo "::set-output name=upload_url::$(./scripts/get_latest_release_upload_url.sh)"
+#
+#      - name: Upload Windows installer
+#        id: upload-windows-installer
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.get-latest-release-upload-url.outputs.upload_url }}
+#          asset_path: .\build\package\msi\NewRelicCLIInstaller\bin\x64\Release\NewRelicCLIInstaller.msi
+#          asset_name: NewRelicCLIInstaller.msi
+#          asset_content_type: application/octet-stream
+#
+#      - name: Upload windows install script
+#        id: upload-windows-install-script
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.get-latest-release-upload-url.outputs.upload_url }}
+#          asset_path: .\scripts\install.ps1
+#          asset_name: install.ps1
+#          asset_content_type: application/octet-stream
