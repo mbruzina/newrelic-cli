@@ -31,7 +31,7 @@ jobs:
 #          path: .\dist\newrelic_windows_amd64_v1
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=1.2.3
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:CLIVersion=1.2.3
 
       - name: Create PFX certificate
         id: create-pfx
