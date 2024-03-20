@@ -24,11 +24,11 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.3
 
-      - name: Download Windows binary
-        uses: actions/download-artifact@v3
-        with:
-          name: windows-binary
-          path: .\dist\newrelic_windows_amd64_v1
+#      - name: Download Windows binary
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: windows-binary
+#          path: .\dist\newrelic_windows_amd64_v1
 
       - name: Compile installer
         run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln /p:CLIVersion=1.2.3
