@@ -51,9 +51,6 @@
     <DefineConstants>Version=$(Version)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-  	<CreateProperty Condition="$(CLIVersion) != ''" Value="AgentVersion=$(CLIVersion);$(DefineConstants)">
-        <Output TaskParameter="Value" PropertyName="DefineConstants" />
-    </CreateProperty>
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
