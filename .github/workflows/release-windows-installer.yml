@@ -4,6 +4,11 @@ permissions: write-all
 
 on:
   workflow_dispatch:
+    inputs:
+      TAG:
+        required: true
+        type: string
+
 #  workflow_call:
 #    secrets:
 #      RELEASE_TOKEN:
@@ -25,7 +30,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=$(git describe --tags $(git rev-list --tags --max-count=1))
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ inputs.TAG }}
 
       - name: Create PFX certificate
         id: create-pfx
