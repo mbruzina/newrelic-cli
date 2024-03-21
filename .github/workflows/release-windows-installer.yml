@@ -27,13 +27,10 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.3
 
-      - name: Get git
-        run: choco install git
-
       - name: Compile installer
         run: |
-          $VERSION = git describe --tags --abbrev=0 | ForEach-Object { $_ -replace 'v', '' }
-          msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=$VERSION
+          $LATEST_VERSION = git describe --tags --abbrev=0 | ForEach-Object { $_ -replace 'v', '' }
+          msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=$LATEST_VERSION
 
       - name: Create PFX certificate
         id: create-pfx
