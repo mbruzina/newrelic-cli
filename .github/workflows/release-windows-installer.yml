@@ -25,9 +25,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3
 
       - name: Compile installer
-        run: |
-         $tag = $(git describe --tags $(git rev-list --tags --max-count=1))
-         msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=$tag
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=$(git describe --tags $(git rev-list --tags --max-count=1))
 
       - name: Create PFX certificate
         id: create-pfx
