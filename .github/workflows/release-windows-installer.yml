@@ -25,6 +25,11 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.3
 
+      - name: Add git because it's not present in our runner lol
+        uses: crazy-max/ghaction-chocolatey@v3
+        with:
+          args: git
+
       - name: Compile installer
         run: |
           $VERSION = git describe --tags --abbrev=0 | ForEach-Object { $_ -replace 'v', '' }
