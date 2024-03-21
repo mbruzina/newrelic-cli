@@ -21,21 +21,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get latest tag
-        id: get-latest-tag
-        uses: actions-ecosystem/action-get-latest-tag@v1
-
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.3
 
-#      - name: Download Windows binary
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: windows-binary
-#          path: .\dist\newrelic_windows_amd64_v1
-
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ steps.get-latest-tag.outputs.tag }}
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ github.ref_name }}
 
       - name: Create PFX certificate
         id: create-pfx
