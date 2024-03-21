@@ -25,7 +25,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ github.ref_name }}
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ github.ref_name#v }}
 
       - name: Create PFX certificate
         id: create-pfx
