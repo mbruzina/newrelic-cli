@@ -4,10 +4,6 @@ permissions: write-all
 
 on:
   workflow_dispatch:
-    inputs:
-      TAG:
-        required: true
-        type: string
 
 #  workflow_call:
 #    secrets:
@@ -30,7 +26,9 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ inputs.TAG }}
+        run: |
+          $VERSION = git describe --tags --abbrev=0 | ForEach-Object { $_ -replace 'v', '' }
+          msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=$VERSION
 
       - name: Create PFX certificate
         id: create-pfx
