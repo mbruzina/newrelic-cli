@@ -22,6 +22,7 @@ on:
 #        required: true
 
 jobs:
+
   release-windows:
     name: Publish Windows Release
     runs-on: ubuntu-20.04

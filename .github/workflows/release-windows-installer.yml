@@ -14,6 +14,14 @@ on:
 #        required: true
 
 jobs:
+  fetch-version:
+    name: Publish Windows Release
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get Version Tag
+        id: get-latest-tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+
   release-windows-installer:
     name: Create Windows Release
     runs-on: windows-2022
@@ -25,7 +33,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.3
 
       - name: Compile installer
-        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ github.ref_name#v }}
+        run: msbuild .\build\package\msi\NewRelicCLIInstaller.sln -p:Version=${{ steps.get-latest-tag.outputs.tag }}
 
       - name: Create PFX certificate
         id: create-pfx
