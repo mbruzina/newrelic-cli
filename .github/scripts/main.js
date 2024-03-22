@@ -87,7 +87,7 @@ function main() {
             try {
                 const command = new SendMessageCommand({
                     QueueUrl: SQS_URL,
-                    MessageBody: body,
+                    MessageBody: JSON.stringify(body),
                 })
                 data = await sqs.send(command)
                 messageId = data.MessageId
