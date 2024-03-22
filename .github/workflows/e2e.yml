@@ -51,6 +51,7 @@ jobs:
                 return {
                   testDefinitionFile,
                   testDisplayName: testDefinitionFile.split("/").pop(),
+                  testDefinitionSuffix: `test/definitions/smoke/${testDefinitionFile}`
                 };
               });
             const output = {
