@@ -3,7 +3,7 @@ const {SQSClient, SendMessageCommand} = require('@aws-sdk/client-sqs')
 const {DynamoDBClient, QueryCommand} = require('@aws-sdk/client-dynamodb')
 const {unmarshall} = require('@aws-sdk/util-dynamodb')
 
-const region = process.argv(2)
+const region = process.argv.slice(2)
 const AWS_REGION = process.env[`DEPLOYER_PLATFORM_${region}.AWS_REGION`]
 const SQS_URL = process.env[`DEPLOYER_PLATFORM_${region}.SQS_URL`]
 const DYNAMO_TABLE = process.envenv[`DEPLOYER_PLATFORM_${region}.DYNAMO_TABLE`]
