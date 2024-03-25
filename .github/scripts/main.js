@@ -6,9 +6,9 @@ const {unmarshall} = require('@aws-sdk/util-dynamodb')
 const region = process.argv.slice(2)
 const AWS_REGION = process.env[`DEPLOYER_PLATFORM_${region}.AWS_REGION`]
 const SQS_URL = process.env[`DEPLOYER_PLATFORM_${region}.SQS_URL`]
-const DYNAMO_TABLE = process.envenv[`DEPLOYER_PLATFORM_${region}.DYNAMO_TABLE`]
+const DYNAMO_TABLE = process.env[`DEPLOYER_PLATFORM_${region}.DYNAMO_TABLE`]
 const AWS_CREDS = {
-    accessKeyId: process.envenv[`DEPLOYER_PLATFORM_${region}.AWS_ACCESS_KEY_ID`],
+    accessKeyId: process.env[`DEPLOYER_PLATFORM_${region}.AWS_ACCESS_KEY_ID`],
     secretAccessKey: process.env[`DEPLOYER_PLATFORM_${region}.AWS_SECRET_ACCESS_KEY`]
 };
 
