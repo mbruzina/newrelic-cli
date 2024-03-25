@@ -210,11 +210,11 @@ jobs:
         run: node main.js US
         env:
           TEST_DEFINITION_URL: https://raw.githubusercontent.com/newrelic/open-install-library/main${{ matrix.testDefinitionSuffix }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          SQS_URL: ${{ secrets.SQS_URL }}
-          DYNAMO_TABLE: ${{ secrets.DYNAMO_TABLE }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER_PLATFORM_US_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER_PLATFORM_US_AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.DEPLOYER_PLATFORM_US_AWS_REGION }}
+          SQS_URL: ${{ secrets.DEPLOYER_PLATFORM_US_SQS_URL }}
+          DYNAMO_TABLE: ${{ secrets.DEPLOYER_PLATFORM_US_DYNAMO_TABLE }}
 
 
 #      - name: Write AWS Certificate to File

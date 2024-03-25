@@ -3,15 +3,13 @@ const {SQSClient, SendMessageCommand} = require('@aws-sdk/client-sqs')
 const {DynamoDBClient, QueryCommand} = require('@aws-sdk/client-dynamodb')
 const {unmarshall} = require('@aws-sdk/util-dynamodb')
 
-const region = process.argv.slice(2)
-const AWS_REGION = process.env[`DEPLOYER_PLATFORM_${region}.AWS_REGION`]
-const SQS_URL = process.env[`DEPLOYER_PLATFORM_${region}.SQS_URL`]
-const DYNAMO_TABLE = process.env[`DEPLOYER_PLATFORM_${region}.DYNAMO_TABLE`]
+const AWS_REGION = process.env.AWS_REGION
+const SQS_URL = process.env.SQS_URL
+const DYNAMO_TABLE = process.env.DYNAMO_TABLE
 const AWS_CREDS = {
-    accessKeyId: process.env[`DEPLOYER_PLATFORM_${region}.AWS_ACCESS_KEY_ID`],
-    secretAccessKey: process.env[`DEPLOYER_PLATFORM_${region}.AWS_SECRET_ACCESS_KEY`]
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
-
 const sqs = new SQSClient({region: AWS_REGION, credentials: AWS_CREDS})
 const dynamodb = new DynamoDBClient({region: AWS_REGION, credentials: AWS_CREDS})
 
