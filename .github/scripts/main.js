@@ -15,7 +15,6 @@ const AWS_CREDS = {
 const sqs = new SQSClient({region: AWS_REGION, credentials: AWS_CREDS})
 const dynamodb = new DynamoDBClient({region: AWS_REGION, credentials: AWS_CREDS})
 
-
 function queryForDeploymentStatus(messageId) {
     const query_params = {
         TableName: DYNAMO_TABLE,
