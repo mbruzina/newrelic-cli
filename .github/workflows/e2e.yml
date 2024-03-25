@@ -207,7 +207,7 @@ jobs:
 
       - name: Execute test
         working-directory: ${{ github.workspace }}/.github/scripts
-        run: node main.js
+        run: node main.js US
         env:
           TEST_DEFINITION_URL: https://raw.githubusercontent.com/newrelic/open-install-library/main${{ matrix.testDefinitionSuffix }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
